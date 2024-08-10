@@ -1,0 +1,48 @@
+
+<div class="header ps-5 mb-5 mt-2">
+    <h1 class="text-success fw-bolder fs-1">Login</h1>
+</div>
+
+<form action="" class="px-5" [formGroup]="LoginForm" (ngSubmit)="submitLogin()">
+    @if(isFailed){
+        <div class="bg-danger text-bg-danger p-1">
+            <span class="fst-normal">{{errorMessage}}</span>
+        </div>
+    }
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="floatingInput1" formControlName="email">
+        <label for="floatingInput1">email</label>
+        @if(LoginForm.get("email")?.errors && LoginForm.touched){
+            <div class="p-1 m-1 bg-danger-subtle text-danger rounded-2">
+                @if(LoginForm.get("email")?.errors?.["required"] ){
+                    <span>email is required</span>
+                }@else if(LoginForm.get("email")?.errors?.["email"]){
+                    <span>your email is invalid</span>
+                }
+            </div>
+        }
+    </div>
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="floatingInput2" formControlName="password">
+        <label for="floatingInput2">password</label>
+        @if(LoginForm.get("password")?.errors && LoginForm.touched){
+            <div class="p-1 m-1 bg-danger-subtle text-danger rounded-2">
+                @if(LoginForm.get("password")?.errors?.["required"] ){
+                    <span>password is required</span>
+                }@else if(LoginForm.get("password")?.errors?.["minlength"]){
+                    <span>your password can't be less than 6 characters</span>
+                }
+                @else if(LoginForm.get("password")?.errors?.["pattern"]){
+                    <span>your password must have at least one capital character</span>
+                }
+            </div>
+        }
+    </div>
+
+    <button type="submit" class="btn btn-success d-block ms-auto mb-3">
+        Login
+        @if(isLoading){
+            <i class="fa-solid fa-spinner fa-spin-pulse"></i>
+        }
+    </button>
+</form>

@@ -1,0 +1,98 @@
+
+<div class="header ps-5 mb-5 mt-2">
+    <h1 class="text-success fw-bolder fs-1">Register</h1>
+</div>
+
+<form action="" class="px-5" [formGroup]="RegisterForm" (ngSubmit)="submitRegister()">
+    @if(isFailed){
+        <div class="bg-danger text-bg-danger p-1">
+            <span class="fst-normal">{{errorMessage}}</span>
+        </div>
+    }
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="floatingInput" formControlName="name">
+        <label for="floatingInput">name</label>
+        @if(RegisterForm.get("name")?.errors && RegisterForm.touched){
+            <div class="p-1 m-1 bg-danger-subtle text-danger rounded-2">
+                @if(RegisterForm.get("name")?.errors?.["required"] ){
+                    <span>name is required</span>
+                }@else if(RegisterForm.get("name")?.errors?.["pattern"]){
+                    <span>name can only contain characters</span>
+                }@else if(RegisterForm.get("name")?.errors?.["minlength"]){
+                    <span>the minimum length for name is 3 characters</span>
+                }@else if(RegisterForm.get("name")?.errors?.["maxlength"]){
+                    <span>the max length for name is 20 characters</span>
+                }    
+            </div>
+        }
+    </div>
+
+    <div class="form-floating mb-3">
+        <input type="email" class="form-control" id="floatingInput2" formControlName="email">
+        <label for="floatingInput2">email</label>
+        @if(RegisterForm.get("email")?.errors && RegisterForm.touched){
+            <div class="p-1 m-1 bg-danger-subtle text-danger rounded-2">
+                @if(RegisterForm.get("email")?.errors?.["required"] ){
+                    <span>email is required</span>
+                }@else if(RegisterForm.get("email")?.errors?.["email"]){
+                    <span>your email is invalid</span>
+                }
+            </div>
+        }
+    </div>
+
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="floatingInput3" formControlName="phone">
+        <label for="floatingInput3">phone</label>
+        @if(RegisterForm.get("phone")?.errors && RegisterForm.touched){
+            <div class="p-1 m-1 bg-danger-subtle text-danger rounded-2">
+                @if(RegisterForm.get("phone")?.errors?.["required"] ){
+                    <span>phone number is required</span>
+                }@else if(RegisterForm.get("phone")?.errors?.["pattern"]){
+                    <span>your phone is invalid</span>
+                }@else if(RegisterForm.get("phone")?.errors?.["minlength"]){
+                    <span>your phone can't be less than 11 numbers</span>
+                }@else if(RegisterForm.get("phone")?.errors?.["maxlength"]){
+                    <span>your phone can't exceed 11 numbers</span>
+                }
+            </div>
+        }
+    </div>
+
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="floatingInput4" formControlName="password">
+        <label for="floatingInput4">password</label>
+        @if(RegisterForm.get("password")?.errors && RegisterForm.touched){
+            <div class="p-1 m-1 bg-danger-subtle text-danger rounded-2">
+                @if(RegisterForm.get("password")?.errors?.["required"] ){
+                    <span>password is required</span>
+                }@else if(RegisterForm.get("password")?.errors?.["minlength"]){
+                    <span>your password can't be less than 6 characters</span>
+                }
+                @else if(RegisterForm.get("password")?.errors?.["pattern"]){
+                    <span>your password must have at least one capital character</span>
+                }
+            </div>
+        }
+    </div>
+
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="floatingInput5" formControlName="rePassword">
+        <label for="floatingInput5">re-enter password</label>
+        @if(RegisterForm.errors && RegisterForm.touched){
+            <div class="p-1 m-1 bg-danger-subtle text-danger rounded-2">
+                @if(RegisterForm.get("password")?.errors?.["required"] ){
+                    <span>password is required</span>
+                }@else if(RegisterForm?.errors?.["passmatch"]){
+                    <span>re-password doesn't match with original password</span>
+                }
+            </div>
+        }
+    </div>
+    <button type="submit" [disabled]="RegisterForm.status == 'INVALID'" class="btn btn-success d-block ms-auto mb-3 ">
+        Register
+        @if(isLoading){
+            <i class="fa-solid fa-spinner fa-spin-pulse"></i>
+        }
+    </button>
+</form>
